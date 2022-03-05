@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algebra</title>
+
+</head>
+<body>
+    <div>
+        <div>
+            <label> 1. Sayı </label>
+            <input id="intA">
+        </div>
+        <div>   
+            <label> 2. Sayı </label>
+            <input id="intB">
+        </div>
+        <div>  
+            <label> İşlem </label>
+            <select id="method">
+                <option value="0">Toplama</option>
+                <option value="1">Çarpma</option>
+                <option value="2">Bölme</option>
+                <option value="3">Çıkarma</option>
+            </select>
+        </div>
+        <div>    
+            <button id="button" type="submit"> Hesapla </button>
+        </div> 
+    </div>
+    <script>
+        const button = document.getElementById('button')
+        button.addEventListener('click', function(e) {
+            soap()
+        })
+        
+        function soap() {
+            const methodIndex = document.getElementById('method').value
+            const intA = document.getElementById('intA').value
+            const intB = document.getElementById('intB').value
+            return fetch('http://localhost:3000/' + methodIndex, {
+                method: "POST",
+                body: JSON.stringify({ intA: Number(intA), intB: Number(intB) }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(result => {
+                    alert(JSON.stringify(result))
+                })
+        }
+    </script>
+    
+</body>
+</html>
